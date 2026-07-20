@@ -1,27 +1,49 @@
+<div align="center">
+
 # 🩺 Onco-Buddy AI
 
-An AI-powered healthcare chatbot that provides general medical guidance, health tips, and educational information using OpenRouter AI.
+### AI-Powered Healthcare Assistant
 
-## 🚀 Features
+🚀 Built with ❤️ by **Arshpreet Kaur**
+
+</div>
+
+---
+
+## 📖 About
+
+Onco-Buddy AI is an AI-powered healthcare chatbot developed to provide general medical guidance and educational information through a clean and interactive interface.
+
+> ⚠️ This project is for educational purposes only and should not be used as a replacement for professional medical advice.
+
+---
+
+# ✨ Features
 
 - 🤖 AI Chat Assistant
-- 💬 Real-time conversation
-- 🌐 Modern and responsive UI
-- ⚡ Fast Node.js + Express backend
-- 🔒 Secure API key using .env
-- 🧠 Powered by OpenRouter AI
+- 💬 Real-Time Conversation
+- ⚡ Fast Response
+- 🌐 Responsive Design
+- 🔒 Secure API Key (.env)
+- 🧠 OpenRouter AI Integration
+- 🎨 Clean User Interface
 
-## 🛠️ Technologies Used
+---
 
-- HTML
-- CSS
+# 🛠 Tech Stack
+
+- HTML5
+- CSS3
 - JavaScript
 - Node.js
 - Express.js
 - OpenRouter API
-- Git & GitHub
+- Git
+- GitHub
 
-## 📂 Project Structure
+---
+
+# 📁 Folder Structure
 
 ```
 Onco-Buddy-AI/
@@ -31,61 +53,96 @@ Onco-Buddy-AI/
 ├── package.json
 ├── package-lock.json
 ├── .gitignore
-└── README.md
+├── README.md
+└── .env (ignored)
 ```
 
-## ⚙️ Installation
+---
 
-Clone the repository
+# 🚀 Installation
+
+Clone Repository
 
 ```bash
 git clone https://github.com/arshpreet-kaur01/Onco-Buddy-AI.git
 ```
 
-Install dependencies
+Go inside project
+
+```bash
+cd Onco-Buddy-AI
+```
+
+Install Packages
 
 ```bash
 npm install
 ```
 
-Create a `.env` file
+Create `.env`
 
-```
-OPENROUTER_API_KEY=your_api_key_here
+```env
+OPENROUTER_API_KEY=YOUR_API_KEY
 ```
 
-Run the server
+Start Server
 
 ```bash
 node server.js
 ```
 
-Open your browser
+Open Browser
 
 ```
 http://localhost:3000
 ```
 
-## 🎯 Future Improvements
+---
 
-- 📄 Medical Report Analysis
-- 💊 Medicine Information
-- 📅 Appointment Booking
-- 🗣️ Voice Assistant
+# 🎯 Future Improvements
+
+- 📄 Medical Report Analyzer
+- 💊 Medicine Recommendation
+- 🏥 Nearby Hospitals
+- 🗓 Appointment Booking
+- 🎤 Voice Assistant
 - 🌍 Multi-language Support
 - ❤️ Health Risk Prediction
 
-## 👩‍💻 Developer
+---
 
-**Arshpreet Kaur**
+# 👩‍💻 Developer
 
-B.Tech Artificial Intelligence & Robotics
+## Arshpreet Kaur
 
-CGC Jhanjeri
+🎓 B.Tech Artificial Intelligence & Robotics
 
-GitHub:
+🏫 CGC Jhanjeri
+
+💻 Passionate AI Developer
+
+🌟 Future AI Engineer
+
+GitHub
+
 https://github.com/arshpreet-kaur01
 
 ---
 
-⭐ If you like this project, don't forget to give it a Star!
+## ⭐ Support
+
+If you like this project,
+
+⭐ Give this repository a Star.
+
+It motivates me to build more AI projects.
+
+---
+
+<div align="center">
+
+### Thank You ❤️
+
+Made with ☕ + 💻 + ❤️
+
+</div>
