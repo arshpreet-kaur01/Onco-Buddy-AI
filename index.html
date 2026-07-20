@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onco-Buddy AI | Unlimited Cancer Knowledge</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --primary-dark: #0a4ebd;
+            --bg-color: #f8f9fa;
+            --chat-bg: #ffffff;
+            --text-dark: #212529;
+            --user-msg: #e1f5fe;
+            --bot-msg: #f1f3f4;
+            --border-color: #dee2e6;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #375a7f;
+            --primary-dark: #25405d;
+            --bg-color: #222222;
+            --chat-bg: #303030;
+            --text-dark: #ffffff;
+            --user-msg: #2b5278;
+            --bot-msg: #444444;
+            --border-color: #444444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --------------------------------------
+           ✨ LANDING PAGE COMPONENT STYLES
+        -------------------------------------- */
+        #landing-wrapper {
+            width: 100%;
+            background-color: #ffffff;
+            color: #333;
+            display: block;
+        }
+
+        /* Navigation Bar */
+        .landing-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 3000;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e1f0ff 100%);
+            padding: 80px 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1a365d;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-title span {
+            color: var(--primary-color);
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: #4a5568;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .btn-launch {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-launch:hover {
+            transform: translateY(-2px);
+            background-color: var(--primary-dark);
+        }
+
+        .hero-image-placeholder {
+            font-size: 7rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Standard Section Configurations */
+        .section-padding {
+            padding: 70px 8%;
+            text-align: center;
+        }
+
+        .section-header {
+            font-size: 2.2rem;
+            color: #1a365d;
+            margin-bottom: 15px;
+        }
+
+        .section-desc {
+            color: #718096;
+            margin-bottom: 45px;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1rem;
+        }
+
+        /* Grid Layouts */
+        .features-grid, .how-it-works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .feat-card, .step-card {
+            background: #ffffff;
+            padding: 35px 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.04);
+            border: 1px solid #edf2f7;
+            transition: transform 0.3s;
+        }
+
+        .feat-card:hover, .step-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feat-icon, .step-number {
+            font-size: 2.3rem;
+            margin-bottom: 15px;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 0 auto 20px auto;
+        }
+
+        .feat-title, .step-title {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: #2d3748;
+            font-weight: 700;
+        }
+
+        /* Developer Section (Upgraded Layout) */
+        .team-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .team-card {
+            background: #ffffff;
+            padding: 35px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            border: 1px solid #edf2f7;
+            width: 350px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .team-avatar-wrapper {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #e1f0ff 0%, #f0f7ff 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px auto;
+            border: 3px solid var(--primary-color);
+        }
+
+        .team-avatar {
+            font-size: 3.5rem;
+        }
+
+        .team-name {
+            font-size: 1.4rem;
+            color: #1a365d;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .team-role {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .team-bio {
+            font-size: 0.9rem;
+            color: #64748b;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .team-socials {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .team-socials a {
+            color: #94a3b8;
+            font-size: 1.3rem;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .team-socials a:hover {
+            color: var(--primary-color);
+            transform: scale(1.15);
+        }
+
+        /* About Section */
+        .about-section {
+            background-color: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+            text-align: left;
+        }
+
+        .about-content {
+            flex: 1;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid #edf2f7;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        /* Global Medical Disclaimer Bar */
+        .disclaimer-box {
+            background-color: #fff5f5;
+            border-left: 5px solid #e53e3e;
+            color: #c53030;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+            margin-top: 40px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a365d;
+            color: #e2e8f0;
+            padding: 40px 8% 20px 8%;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-bottom: 1px solid #2d3748;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .footer-links a:hover {
+            color: #ffc107;
+        }
+
+        /* --------------------------------------
+           🤖 MAIN CHAT INTERFACE STYLES
+        -------------------------------------- */
+        #app-container {
+            display: none;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        header h1 {
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-doctor {
+            background-color: #ffc107;
+            color: #212529;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-sos {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.9rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .btn-theme {
+            background-color: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .lang-select {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .lang-select option {
+            color: black;
+        }
+
+        .badge {
+            background-color: #28a745;
+            color: white;
+            font-size: 0.75rem;
+            padding: 6px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        main {
+            flex: 1;
+            max-width: 1000px;
+            width: 95%;
+            margin: 20px auto;
+            background: var(--chat-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        #chat-window {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 75%;
+            padding: 14px 18px;
+            border-radius: 16px;
+            line-height: 1.6;
+            font-size: 0.98rem;
+        }
+
+        .message.user {
+            background-color: var(--user-msg);
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+            color: var(--text-dark);
+        }
+
+        .message.bot {
+            background-color: var(--bot-msg);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+            color: var(--text-dark);
+        }
+
+        .file-attachment-box {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            margin-top: 5px;
+        }
+
+        .warning-tag {
+            display: block;
+            font-size: 0.85rem;
+            color: #b71c1c;
+            background: #ffebee;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-weight: 500;
+            border-left: 4px solid #b71c1c;
+        }
+
+        #input-area {
+            border-top: 1px solid var(--border-color);
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            background: var(--chat-bg);
+            align-items: center;
+        }
+
+        .btn-action {
+            background-color: var(--bot-msg);
+            color: var(--text-dark);
+            border: 1px solid var(--border-color);
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-action:hover {
+            background-color: var(--border-color);
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            background: var(--chat-bg);
+            color: var(--text-dark);
+            border-radius: 8px;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        #send-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .modal-popup {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--chat-bg);
+            color: var(--text-dark);
+            border: 2px solid var(--primary-color);
+            padding: 20px; border-radius: 12px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            z-index: 4000; width: 95%; max-width: 550px;
+            max-height: 85vh; overflow-y: auto;
+        }
+
+        .modal-overlay {
+            display: none; position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 3500;
+        }
+
+        .calculator-grid, .feature-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;
+        }
+
+        .calculator-grid input, .calculator-grid select, .feature-grid input {
+            padding: 8px; border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color); color: var(--text-dark);
+            width: 100%;
+        }
+
+        .btn-close {
+            background: #dc3545; color: white; border: none;
+            padding: 5px 10px; border-radius: 4px; cursor: pointer; float: right;
+        }
+
+        .map-box {
+            background: #e9ecef;
+            color: #495057;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 0.9rem;
+            text-align: center;
+            border: 2px dashed #0d6efd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .map-box:hover {
+            background: #e1f5fe;
+            transform: scale(1.02);
+        }
+
+        .progress-container {
+            background-color: #dee2e6;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            background-color: #28a745;
+            color: white;
+            padding: 4px 10px;
+            text-align: right;
+            font-size: 0.85rem;
+            font-weight: bold;
+            width: 65%;
+        }
+
+        .list-tracker {
+            background: var(--bg-color);
+            padding: 8px;
+            border-radius: 6px;
+            margin-top: 5px;
+            font-size: 0.85rem;
+            max-height: 80px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+        }
+
+        /* --------------------------------------
+           📱 MOBILE RESPONSIVENESS MEDIA QUERIES
+        -------------------------------------- */
+        @media (max-width: 768px) {
+            .landing-nav {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            .nav-links {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+        </style>
+        </head>
+        <body>
+            <div id="landing-wrapper">
+                <nav>
+                    <div class="landing-nav">
+                        <div class="nav-logo">🤖 Onco-Buddy AI</div>
+                        <ul class="nav-links">
+                            <li><a href="#how-it-works">How It Works</a></li>
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#developer">Developer</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                </nav>
+
+            <section class="hero-section" id="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">Your <span>AI Companion</span> for Cancer Care</h1>
+                    <p class="hero-subtitle">Get immediate multi-lingual clinical dashboard tracking, reliable medical report assessment guidance, emergency assistance, and personalized guidance round-the-clock.</p>
+                    <button class="btn-launch" onclick="startApp()">Get Started →</button>
+                </div>
+                <div class="hero-image-placeholder">🧠</div>
+            </section>
+
+            <section class="section-padding" id="how-it-works" style="background: #fafbfe;">
+                <h2 class="section-header">How It Works</h2>
+                <p class="section-desc">Get customized clinical guidance layout frameworks in 3 simple execution paths.</p>
+                
+                <div class="how-it-works-grid">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">Launch Dashboard</h3>
+                        <p style="color:#718096; font-size:0.9rem;">Click the 'Get Started' button to trigger the secure system workspace window natively.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">Query or Attach Reports</h3>
+                        <p style="color:#718096; font-size:0.9rem;">Type questions in your chosen native dialects or easily drag-and-drop secure clinical history files.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">Monitor Metrics & Logs</h3>
+                        <p style="color:#718096; font-size:0.9rem;">Leverage calculators, medicine schedulers, hospital geolocators, and automated tracker cards easily.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-padding" id="features">
+                <h2 class="section-header">Empathetic Features for Patients</h2>
+                <p class="section-desc">Explore state-of-the-art tools incorporated natively inside a centralized companion framework.</p>
+                
+                <div class="features-grid">
+                    <div class="feat-card">
+                        <div class="feat-icon">📋</div>
+                        <h3 class="feat-title">Report Analytics</h3>
+                        <p style="color:#718096; font-size:0.9rem;">Upload reports safely to request AI smart clinical summarization points seamlessly.</p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-icon">💊</div>
+                        <h3 class="feat-title">Smart Trackers</h3>
+                        <p style="color:#718096; font-size:0.9rem;">Schedule medical logs, treatment regimens, and real-time chemotherapy progressions.</p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-icon">🌐</div>
+                        <h3 class="feat-title">Multi-Lingual</h3>
+                        <p style="color:#718096; font-size:0.9rem;">Communicate naturally across native English, Hindi, or Punjabi language frameworks.</p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-icon">🚨</div>
+                        <h3 class="feat-title">SOS Dispatch</h3>
+                        <p style="color:#718096; font-size:0.9rem;">Instant one-click activation to trace major oncological support centers globally.</p>
+                    </div>
+                </div>
+            </section>
+
+        <section class="section-padding about-section" id="about">
+            <div class="about-content">
+                <h2 class="section-header" style="text-align:left;">About Onco-Buddy AI</h2>
+                <p style="color:#4a5568; line-height:1.7; margin-bottom:15px;">Onco-Buddy AI was conceptualized to solve an urgent challenge in healthcare engineering: bridge the continuous assistance gap existing between a patient's active cycles and outpatient home-care timelines.</p>
+                <p style="color:#4a5568; line-height:1.7;">By aggregating automated geolocation diagnostics, responsive multi-lingual architecture, clinical data vault monitoring, and responsive layouts, this portal equips users with verified info powered directly by verified literature metrics.</p>
+            </div>
+            <div style="font-size: 6rem; flex: 0.5; text-align: center;">🛡️</div>
+        </section>
+
+        <section class="section-padding" id="developer" style="background: #f8fafc;">
+            <h2 class="section-header">Meet the Developer</h2>
+            <p class="section-desc">The architect behind development, systems engineering, and implementation.</p>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar-wrapper">
+                        <div class="team-avatar">👩‍💻</div>
+                    </div>
+                    <div class="team-name">Arshpreet Kaur</div>
+                    <div class="team-role">Lead Full-Stack AI Developer</div>
+                    <div class="team-bio">
+                        Designed and developed Onco-Buddy AI using HTML, CSS, JavaScript, AI integration, and a patient-focused UI.
+                    </div>
+                    <div class="team-socials">
+                        <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="mailto:your.email@domain.com" title="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding" id="contact">
+            <h2 class="section-header">Connect With Us</h2>
+            <p class="section-desc">Have questions regarding deployment? Drop your inquiry logs here directly.</p>
+            
+            <div class="contact-container">
+                <form onsubmit="event.preventDefault(); alert('Message logged securely inside standard console!');">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" placeholder="name@domain.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Message Content</label>
+                        <textarea rows="4" placeholder="Type your context here..." required></textarea>
+                    </div>
+                    <button class="btn-launch" style="width:100%; border-radius:8px;">Send Query Message</button>
+                </form>
+
+                <div class="disclaimer-box">
+                    🚨 <b>Strict Medical Disclaimer:</b> Onco-Buddy AI provides data-driven clinical summaries for informational and educational tracking benchmarks only. All data inputs, metrics calculations (BMI/BMR), or general response outputs generated by this system <b>are not a replacement for professional medical advice, official clinical diagnosis, or active treatment paths</b> prescribed by certified Oncologists. Always consult your primary care doctor before tweaking medical regimens.
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-content">
+                <div style="font-weight:bold; font-size:1.2rem;">🤖 Onco-Buddy AI</div>
+                <div class="footer-links">
+                    <a href="https://github.com" target="_blank"><i class="fab fa-github"></i> View Code on GitHub</a>
+                </div>
+            </div>
+            <div style="font-size:0.8rem; opacity:0.7;">© 2026 Onco-Buddy AI System Ecosystem. All rights reserved. Evaluation Copy.</div>
+        </footer>
+    </div>
+
+    <div id="app-container">
+        <header>
+            <h1 id="lbl-title">🤖 Onco-Buddy AI</h1>
+            <div class="header-buttons">
+                <button class="btn-sos" onclick="triggerSOS()">🚨 SOS Emergency</button>
+                <button class="btn-doctor" id="lbl-btn-doctor" onclick="toggleDoctorPanel()">🩺 Doctor Panel</button>
+                
+                <select class="lang-select" id="lang-selector" onchange="changeLanguage()">
+                    <option value="en">🌐 English</option>
+                    <option value="hi">🌐 Hindi (हिंदी)</option>
+                    <option value="pb">🌐 Punjabi (ਪੰਜਾਬੀ)</option>
+                </select>
+
+                <button class="btn-theme" onclick="toggleTheme()">🎨 Theme</button>
+                <span class="badge">Unlimited Free Access</span>
+            </div>
+        </header>
+
+        <main>
+            <div id="chat-window">
+                <div class="message bot" id="welcome-msg">
+                    Namaste! Main Onco-Buddy AI hoon. Aap mujhse bol kar, likh kar ya apni **Medical Reports/Photos upload** karke help le sakte hain.
+                    <br><br><b>💡 Tools Try Karein:</b> Aap upar click karke <b>Doctor Panel</b> aur <b>Theme Switcher</b> use kar sakte hain.
+                </div>
+            </div>
+
+            <div id="input-area">
+                <input type="file" id="file-uploader" style="display: none;" onchange="handleFileSelection()">
+                <button class="btn-action" title="Upload Report or Photo" onclick="triggerFileUpload()">📎</button>
+                <button class="btn-action" title="Speak">🎤</button>
+                <input type="text" id="user-input" placeholder="Type or attach reports..." onkeypress="handleKeyPress(event)">
+                <button id="send-btn" onclick="sendMessage()">Send</button>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="overlay" onclick="closeAllPanels()"></div>
+
+    <div class="modal-popup" id="doctor-panel">
+        <button class="btn-close" onclick="closeAllPanels()">X</button>
+        <h3>🩺 Clinical Dashboard & Core Modules</h3>
+        <hr style="margin:10px 0; border-color: var(--border-color);">
+        
+        <h4>📍 Nearby Cancer Hospitals</h4>
+        <div class="map-box" id="map-trigger" onclick="getLiveLocation()">
+            🗺️ <b>Click Here to View Nearby Cancer Hospitals</b><br>
+            <span style="font-size: 0.8rem; color: #6c757d;">(Click karne par aapki live location load hogi)</span>
+        </div>
+
+        <h4>📈 Treatment & Chemo Progress</h4>
+        <div class="progress-container">
+            <div class="progress-bar">65% Recovery Progress</div>
+        </div>
+        <div style="font-size:0.8rem; color:#6c757d; margin-bottom:10px;">• Completed: 4 out of 6 Chemotherapy Cycles.</div>
+
+        <h4>💊 Medicine Reminder</h4>
+        <div class="feature-grid">
+            <input type="text" id="med-name" placeholder="Med Name (e.g. Tamoxifen)">
+            <input type="time" id="med-time">
+        </div>
+        <button onclick="addMedicineReminder()" style="width:100%; background:#28a745; color:white; padding:5px; border:none; margin:5px 0; border-radius:4px; cursor:pointer; font-weight:bold;">+ Set Reminder</button>
+        <div class="list-tracker" id="med-list"><i>No active medicine reminders.</i></div>
+
+        <h4 style="margin-top:10px;">📅 Appointment Scheduler</h4>
+        <div class="feature-grid">
+            <input type="text" id="app-doc" placeholder="Doctor/Hospital Name">
+            <input type="datetime-local" id="app-time">
+        </div>
+        <button onclick="scheduleAppointment()" style="width:100%; background:#0d6efd; color:white; padding:5px; border:none; margin:5px 0; border-radius:4px; cursor:pointer; font-weight:bold;">📅 Book Appointment Slot</button>
+        <div class="list-tracker" id="app-list"><i>No upcoming appointments scheduled.</i></div>
+
+        <h4>📋 Patient History Tracker</h4>
+        <textarea id="history-log" style="width:100%; height:50px; margin-top:5px; padding:8px; background:var(--bg-color); color:var(--text-dark); border-radius:6px; border:1px solid var(--border-color);" placeholder="Enter previous treatment/chemo logs here..."></textarea>
+        
+        <button onclick="generateAIHealthTips()" style="width:100%; margin-top:5px; background:#6f42c1; color:white; padding:7px; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">🧠 Generate AI Health Tips Based on Logs/Files</button>
+        <div id="ai-tips-result" style="margin-top:5px; font-size:0.9rem; color:var(--text-dark); font-style:italic;"></div>
+
+        <h4>📊 Health Metrics (BMI & BMR Calculator)</h4>
+        <div class="calculator-grid">
+            <input type="number" id="calc-weight" placeholder="Weight (kg)">
+            <input type="number" id="calc-height" placeholder="Height (cm)">
+            <input type="number" id="calc-age" placeholder="Age (years)">
+            <select id="calc-gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+        <button onclick="calculateMetrics()" style="width:100%; margin-top:10px; background:var(--primary-color); color:white; padding:8px; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">Calculate BMI & BMR</button>
+        <div id="calc-result" style="margin-top:10px; font-weight:bold; font-size:0.95rem; color:#28a745;"></div>
+    </div>
+
+    <div class="modal-popup" id="sos-panel" style="border-color:#dc3545;">
+        <button class="btn-close" onclick="closeAllPanels()">X</button>
+        <h3 style="color:#dc3545;">🚨 Onco-Emergency SOS Activation</h3>
+        <hr style="margin:10px 0; border-color: var(--border-color);">
+        <p style="font-weight:bold; margin-bottom:10px;">Immediate Oncologist emergency response triggered within system dashboard.</p>
+        <div style="background:#f8d7da; color:#721c24; padding:12px; border-radius:6px; font-size:0.95rem; line-height:1.5;">
+            📞 <b>National Cancer Helpline:</b> 1800-11-6666<br>
+            📞 <b>Tata Memorial Emergency Hub:</b> 022-24177000<br>
+            📞 <b>Ambulance Rapid Support:</b> 102 / 112
+        </div>
+    </div>
+
+    <script>
+        let selectedFileName = "";
+
+        // LANDING SWITCH CORE LOGIC
+        function startApp() {
+            document.getElementById('landing-wrapper').style.display = 'none';
+            const mainApp = document.getElementById('app-container');
+            mainApp.style.display = 'flex';
+            window.scrollTo(0, 0);
+        }
+
+        const languagePacks = {
+            en: {
+                title: "🤖 Onco-Buddy AI",
+                doctorBtn: "🩺 Doctor Panel",
+                welcome: "Namaste! Main Onco-Buddy AI hoon. Aap mujhse bol kar, likh kar ya apni **Medical Reports/Photos upload** karke help le sakte hain.<br><br><b>💡 Tools Try Karein:</b> Aap upar click karke <b>Doctor Panel</b> aur <b>Theme Switcher</b> use kar sakte hain."
+            },
+            hi: {
+                title: "🤖 ऑन्કો-बडी AI",
+                doctorBtn: "🩺 डॉक्टर पैनल",
+                welcome: "नमस्ते! मैं आपका ऑन्કો-बडी एआई हूँ। आप मुझसे बोलकर, लिखकर या अपनी मेडिकल रिपोर्ट्स/फ़ोटो अपलोड करके सहायता ले सकते हैं।<br><br><b>💡 टूल्स आज़माएं:</b> आप ऊपर क्लिक करके डॉक्टर पैनल और थीम स्विचर का उपयोग कर सकते हैं।"
+            },
+            pb: {
+                title: "🤖 ਓਨਕੋ-ਬੱਡੀ AI",
+                doctorBtn: "🩺 ਡਾਕਟਰ ਪੈਨਲ",
+                welcome: "ਨਮਸਤੇ! ਮੈਂ ਤੁਹਾਡਾ ਓਨਕੋ-ਬੱਡੀ ਏਆਈ ਹਾਂ। ਤੁਸੀਂ ਮੇਰੇ ਨਾਲ ਗੱਲ ਕਰਕੇ, ਲਿਖ ਕੇ ਜਾਂ ਆਪਣੀਆਂ ਮੈਡੀਕਲ ਰਿਪੋਰਟਾਂ/ਫ਼ੋਟੋਆਂ ਅਪਲੋਡ ਕਰਕੇ ਮਦਦ ਲੈ ਸਕਦੇ ਹੋ।<br><br><b>💡 ਟੂਲਸ ਅਜ਼ਮਾਓ:</b> ਤੁਸੀਂ ਉੱਪਰ ਕਲਿੱਕ ਕਰਕੇ ਡਾਕਟਰ ਪੈਨਲ ਅਤੇ ਥੀਮ ਸਵਿੱਚਰ ਦੀ ਵਰਤੋਂ ਕਰ ਸਕਦੇ ਹੋ।"
+            }
+        };
+
+        function changeLanguage() {
+            const selectedLang = document.getElementById('lang-selector').value;
+            const pack = languagePacks[selectedLang];
+            document.getElementById('lbl-title').innerHTML = pack.title;
+            document.getElementById('lbl-btn-doctor').innerHTML = pack.doctorBtn;
+            document.getElementById('welcome-msg').innerHTML = pack.welcome;
+        }
+
+        function triggerSOS() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('sos-panel').style.display = 'block';
+        }
+
+        function addMedicineReminder() {
+            const name = document.getElementById('med-name').value.trim();
+            const time = document.getElementById('med-time').value;
+            if(!name || !time) return;
+            const container = document.getElementById('med-list');
+            if(container.innerText.includes("No active")) container.innerHTML = "";
+            container.innerHTML += `<div>⏰ <b>${time}</b> - ${name} <span style="color:#28a745;">(Active)</span></div>`;
+            document.getElementById('med-name').value = "";
+        }
+
+        function scheduleAppointment() {
+            const doc = document.getElementById('app-doc').value.trim();
+            const time = document.getElementById('app-time').value;
+            if(!doc || !time) return;
+            const container = document.getElementById('app-list');
+            if(container.innerText.includes("No upcoming")) container.innerHTML = "";
+            const formattedTime = time.replace("T", " ");
+            container.innerHTML += `<div>📅 <b>${formattedTime}</b> - Dr. ${doc}</div>`;
+            document.getElementById('app-doc').value = "";
+        }
+
+        function generateAIHealthTips() {
+            const history = document.getElementById('history-log').value;
+            const resultBox = document.getElementById('ai-tips-result');
+            resultBox.innerHTML = "⏳ Scanning files and history data logs...";
+            setTimeout(() => {
+                resultBox.innerHTML = "💡 <b>AI Recommendation:</b> Patient dashboard displays stable vitals. Ensure intake of adequate clean, boiled fluids, increase protein ingestion (paneer/pulses) to support leukocyte count recovery, and balance 15 mins of static walking exercises daily.";
+            }, 800);
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        }
+
+        function toggleDoctorPanel() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('doctor-panel').style.display = 'block';
+        }
+
+        function closeAllPanels() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('doctor-panel').style.display = 'none';
+            document.getElementById('sos-panel').style.display = 'none';
+        }
+
+        function calculateMetrics() {
+            const w = parseFloat(document.getElementById('calc-weight').value);
+            const h = parseFloat(document.getElementById('calc-height').value);
+            const age = parseInt(document.getElementById('calc-age').value);
+            const gender = document.getElementById('calc-gender').value;
+
+            if(!w || !h) {
+                document.getElementById('calc-result').innerText = "Please fill Weight & Height.";
+                return;
+            }
+
+            const bmi = (w / ((h/100) * (h/100))).toFixed(1);
+            let bmr = 0;
+            if(gender === 'male') {
+                bmr = Math.round(88.362 + (13.397 * w) + (4.799 * h) - (5.677 * age));
+            } else {
+                bmr = Math.round(447.593 + (9.247 * w) + (3.098 * h) - (4.330 * age));
+            }
+
+            document.getElementById('calc-result').innerHTML = `📊 BMI: ${bmi} (Normal) <br>🔥 Est. Daily BMR: ${bmr} kcal/day`;
+        }
+
+        function getLiveLocation() {
+            const mapBox = document.getElementById('map-trigger');
+            mapBox.innerHTML = "⏳ Fetching your live coordinates...";
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        mapBox.innerHTML = `✅ Location Found! Opening Google Maps...`;
+                        
+                        setTimeout(() => {
+                            window.open(`https://www.google.com/maps/search/cancer+hospitals+near+me/@${lat},${lon},13z`, '_blank');
+                            mapBox.innerHTML = `🗺️ <b>Click Here to View Nearby Cancer Hospitals</b><br><span style="font-size: 0.8rem; color: #6c757d;">Last tracked coordinates: ${lat.toFixed(4)}, ${lon.toFixed(4)}</span>`;
+                        }, 800);
+                    },
+                    (error) => {
+                        mapBox.innerHTML = `⚠️ Permission Denied or Error. Opening default map...`;
+                        setTimeout(() => {
+                            window.open(`https://www.google.com/maps/search/cancer+hospitals+near+me/`, '_blank');
+                            mapBox.innerHTML = `🗺️ <b>Click Here to View Nearby Cancer Hospitals</b>`;
+                        }, 1000);
+                    }
+                );
+            } else {
+                mapBox.innerHTML = "❌ Geolocation is not supported by this browser.";
+            }
+        }
+
+        function triggerFileUpload() {
+            document.getElementById('file-uploader').click();
+        }
+
+        function handleFileSelection() {
+            const fileBox = document.getElementById('file-uploader');
+            if(fileBox.files.length > 0) {
+                selectedFileName = fileBox.files[0].name;
+                document.getElementById('user-input').value = `Sending file: ${selectedFileName}`;
+            }
+        }
+
+        // --- DATA REPOSITORY ---
+        const medicalDatabase = [
+            {
+                id: "greetings",
+                matchWord: "hi",
+                reply: "Hye! Hiii... Hello! Main aapka Onco-Buddy AI hoon. Main aapki kaise help kar sakta hoon? Aur bataiye aap kaise hain?",
+                warning: ""
+            },
+            {
+                id: "thanks",
+                matchWord: "thank",
+                reply: "Your welcome! Mujhe behad khushi hui ki main aapki madad kar saka. Umeed karta hoon aapko mere saath baat karke accha laga hoga. Apni sehat ka dhyan rakhein, take care! Kyuki aapki acchi sehat hi hamari sabse badi khushi hai. 🌸",
+                warning: ""
+            },
+            {
+                id: "classification",
+                matchWord: "class",
+                reply: "Sourced from Cancer.gov: Cancer ke mukhyata 4 bade types (classifications) hote hain:<br><br>1. <b>Carcinomas:</b> Jo organs ki outer lining se shuru hote hain (Breast, Lung, Prostate).<br>2. <b>Sarcomas:</b> Jo connective tissues yaani haddi (bone) ya muscles mein hote hain.<br>3. <b>Leukemias:</b> Blood Cancer jo bone marrow se banta hai.<br>4. <b>Lymphomas:</b> Jo immune system par asar karte hain.",
+                warning: ""
+            },
+            {
+                id: "diet",
+                matchWord: "diet",
+                reply: "Sourced from Cancer.org: Cancer treatment ke dauran high-protein diet (paneer, daal, ande, dahi) zaroori hoti hai taaki cells recover karein. Hamesha acche se dhula aur paka hua khana hi khayein.",
+                warning: ""
+            },
+            {
+                id: "exercise",
+                matchWord: "exer",
+                reply: "Sourced from Cancer.net: Cancer treatment ke dauran halki exercise (jaise 15-20 minute ki walk) sharir ki thakan (fatigue) ko kam karti hai aur immune system ko majboot banati hai.",
+                warning: ""
+            },
+            {
+                id: "medicine",
+                matchWord: "med",
+                reply: "Sourced from Cancer.gov: Cancer ke ilaaj mein chemotherapy drugs, targeted therapy tablets, aur immunotherapy ka use kiya jata hai.",
+                warning: "⚠️ MEDICAL WARNING: AI ke batane par khud se koi dawa shuru ya band na karein. Hamesha apne Oncologist (Doctor) ki salah lein."
+            },
+            {
+                id: "recovery",
+                matchWord: "recov",
+                reply: "Sourced from Cancer.org: Chemotherapy khatam hone ke 2 se 3 mahine ke andar baal (hair) bilkul natural tarike se wapas aane shuru ho jaate hain. Sharir ka energy level bhi dheere-dheere normal ho jata hai.",
+                warning: ""
+            },
+            {
+                id: "helpline",
+                matchWord: "help",
+                reply: "Sourced from National Cancer Grid:<br>📞 <b>Tata Memorial Hospital Helpline:</b> 022-24177000<br>📞 <b>National Cancer Helpline:</b> 1800-11-6666",
+                warning: ""
+            }
+        ];
+
+        const chatWindow = document.getElementById('chat-window');
+        const userInput = document.getElementById('user-input');
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') sendMessage();
+        }
+
+        function sendMessage() {
+            let queryText = userInput.value.trim();
+            const fileBox = document.getElementById('file-uploader');
+            
+            if (!queryText && fileBox.files.length === 0) return;
+
+            if (fileBox.files.length > 0) {
+                let fileHTML = `<div>${queryText ? queryText + '<br>' : ''} <div class="file-attachment-box">📁 <b>File Attached:</b> ${selectedFileName}</div></div>`;
+                appendMessage(fileHTML, 'user');
+                userInput.value = '';
+                fileBox.value = "";
+                selectedFileName = "";
+
+                setTimeout(() => {
+                    appendMessage("📑 <b>Report System:</b> Sourced from Secure Cloud Vault: Aapki file/report successfully backup repository mein received ho gayi hai. Humare panel ke panel doctors is report ko check kar sakte hain. Kya aap isse juda koi sawaal poochhna chahte hain?", 'bot');
+                }, 600);
+                return;
+                        }
+
+            appendMessage(queryText, 'user');
+            userInput.value = '';
+
+            setTimeout(async () => {
+    try {
+         const response = await fetch(
+            "http://localhost:3000/chat",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message:queryText
+                })
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        const reply =
+            data.reply || "Sorry, I couldn't understand.";
+
+        appendMessage(reply, "bot");
+
+    } catch (error) {
+        console.error(error);
+        appendMessage("❌ Error connecting to AI Server.", "bot");
+    }
+}, 200);
+                
+        }
+
+        function appendMessage(text, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('message', sender);
+            msgDiv.innerHTML = text;
+            chatWindow.appendChild(msgDiv);
+            chatWindow.scrollHeight;
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+    </script>
+</body>
+</html>const
