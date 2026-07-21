@@ -1,4 +1,5 @@
 const express = require("express");
+const path= require("path");
 const cors = require("cors");
 require("dotenv").config();
 
@@ -8,14 +9,15 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static((__dirname)));
+app.get("/", (req, res) => {
+  console.log("ROOT ROUTE HIT");
+  res.sendFile(path.join(__dirname, "index.html"));
+});
 
 const client = new OpenAI({
   apiKey: process.env.OPENROUTER_API_KEY,
   baseURL: "https://openrouter.ai/api/v1",
-});
-
-app.get("/", (req, res) => {
-  res.send("✅ Onco-Buddy AI Backend is Running...");
 });
 
 app.post("/chat", async (req, res) => {
